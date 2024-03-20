@@ -23,6 +23,7 @@ class HomePage extends StatelessWidget {
               },
               child: Text('Démarrer une partie'),
             ),
+            SizedBox(height: 16), // Add SizedBox to create space
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
@@ -32,6 +33,7 @@ class HomePage extends StatelessWidget {
               },
               child: Text('Voir mes scores'),
             ),
+            SizedBox(height: 16), // Add SizedBox to create space
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
