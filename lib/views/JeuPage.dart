@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
+import 'DatabaseHelper.dart';
 
 class JeuPage extends StatefulWidget {
+  DatabaseHelper dbHelper = DatabaseHelper();
   final String prenom;
   JeuPage({required this.prenom});
 
@@ -43,8 +45,12 @@ class _JeuPageState extends State<JeuPage> {
         _fini = true;
         _maxValue *= 2;
         _maxTries += 1;
+        
+        // Enregistrer le score dans la base de données
+        _saveScore(widget.prenom, _essais);
       } else if (_essais >= _maxTries) {
-        _resultat = 'Désolé, vous avez épuisé vos essais. Le nombre mystère était $_nombreMystere.';
+        _resultat =
+            'Désolé, vous avez épuisé vos essais. Le nombre mystère était $_nombreMystere.';
         _fini = true;
       } else if (_nombreChoisi < _nombreMystere) {
         _resultat = 'Le nombre mystère est plus grand';
@@ -53,6 +59,14 @@ class _JeuPageState extends State<JeuPage> {
       }
       _controller.clear();
     });
+  }
+
+  void _saveScore(String name, int score) {
+    Map<String, dynamic> scoreMap = {
+      'name': name,
+      'score': score,
+    };
+    widget.dbHelper.insertScore(scoreMap);
   }
 
   @override
